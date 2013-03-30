@@ -1,13 +1,13 @@
 <?php
 
-  $about = array(
+	$about = array(
 		'name' => 'Italian',
 		'author' => array(
 			'name' => 'Davide Grobberio',
 			'email' => 'davide@zaniniadv.it',
-			'website' => 'www.zaniniadv.it'
+			'website' => ''
 		),
-		'release-date' => '2013-01-27'
+		'release-date' => '2013-03-30'
 	);
 
 	/**
@@ -16,7 +16,7 @@
 	$dictionary = array(
 
 		'All items' => 
-		'Tutti',
+		'Tutte le voci',
 
 		'Cache (minutes)' => 
 		'Cache (minuti)',
@@ -31,16 +31,16 @@
 		'Dashboard',
 
 		'Data Source to Table' => 
-		'Sorgenti dati',
+		'Sorgenti dati -> Tabella',
 
 		'Delete Panel' => 
-		'Cancella pannello',
+		'Elimina pannello',
 
 		'Feed URL' => 
 		'Feed URL',
 
 		'Full view' => 
-		'Visualizzazione intera',
+		'Vista completa',
 
 		'Good evening' => 
 		'Buonasera',
@@ -49,25 +49,25 @@
 		'Buongiorno',
 
 		'HTML Block' => 
-		'Codice HTML',
+		'Blocco HTML',
 
 		'Items to display' => 
 		'Voci da visualizzare',
 
 		'List view' => 
-		'List view',
+		'Elenco',
 
 		'Markdown Text' => 
 		'Markdown Text',
 
 		'Markdown Text Block' => 
-		'Markdown Text Block',
+		'Blocco di testo',
 
 		'Nice to meet you' => 
-		'Piacere di vederti',
+		'Piacere',
 
 		'Page URL' => 
-		'Page URL',
+		'URL pagina',
 
 		'RSS Reader' => 
 		'Lettore RSS',
@@ -79,13 +79,13 @@
 		'Statistiche',
 
 		'Symphony Overview' => 
-		'Symphony Overview',
+		'Panoramica Symphony',
 
 		'Text' => 
-		'Text',
+		'Testo',
 
 		'The Data Source with the name <code>%s</code> could not be found.' => 
-		'La sorgente di dati con il nome <code>%s</code> non può essere trovata.',
+		'La sorgente di dati con nome <code>%s</code> non è stata trovata.',
 
 		'Untitled Panel' => 
 		'Pannello senza titolo',
@@ -94,7 +94,7 @@
 		'Bentornato',
 
 		'drag to re-order' => 
-		'Trascina per riordinare',
+		'trascina per riordinare',
 
 		'items' => 
 		'voci',
