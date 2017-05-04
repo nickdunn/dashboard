@@ -35,7 +35,8 @@
 	<xsl:variable name="field" select="$entry/*[name()=name(current())]"/>
 
 	<xsl:if test="position() &lt; 5">
-	<td>
+
+	<td data-title="{name()}">
 		<xsl:attribute name="class">
 			<xsl:choose>
 				<xsl:when test="$field/@word-count or $field[@mode='formatted'] or $field[@mode='unformatted']">
