@@ -6,6 +6,10 @@
 	}
 }
 
+body#extension-dashboard-index .columns.two .column.secondary {
+	border: none;
+}
+
 #dashboard.columns {
 	-webkit-align-items: flex-start;
 	align-items: flex-start;
