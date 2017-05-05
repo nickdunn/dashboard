@@ -1,4 +1,6 @@
-/* DASHBOARD */
+/*-----------------------------------------------------------------------------
+	Interface
+-----------------------------------------------------------------------------*/
 
 @media (max-width: 766px) {
 	body#extension-dashboard-index #context .actions {
@@ -20,34 +22,62 @@ body#extension-dashboard-index .columns.two .column.secondary {
 	width: 25rem;
 }
 
+/*-----------------------------------------------------------------------------
+	Drawer
+-----------------------------------------------------------------------------*/
+
+#drawer-dashboard.drawer {
+	box-sizing: border-box;
+	overflow: auto;
+	position: absolute;
+	right: 0;
+	top: 100%;
+	padding: 3rem;
+	border: 1px solid #d3dce2;
+	background: #fff;
+	width: 100%;
+	height: calc(100vh - 6rem);
+	z-index: 60;
+}
+
+#drawer-dashboard.drawer .contents {
+	margin: 0 auto;
+	padding: 0;
+	max-width: 128rem;
+}
+
+/*---------------------------------------
+	Save Panel
+---------------------------------------*/
+
 #save-panel {
 	position: relative;
 	overflow: hidden;
 	clear: both;
-	margin-top: -8px;
 }
 
 #save-panel h3 {
-	font-size: 120%;
-	color: #555;
+	font-size: 1.6rem;
+	color: #3B3D40;
+	font-weight: 300;
 	text-shadow: none;
 	font-weight: normal;
-	padding: 0 0 12px;
-	border-bottom: 1px solid #ddd;
+	padding: 0 0 3rem;
 	position: relative;
 }
 
 #save-panel h3 span {
-	left: 275px;
-	position: absolute;
+	color: #2f77eb;
 }
 
 #save-panel fieldset {
-	border: 1px solid transparent;
-	border-bottom: 1px solid #eee;
 	overflow: hidden;
 	margin-right: 0;
 	margin-left: 0;
+}
+
+#save-panel fieldset label + label {
+	margin-top: 3rem;
 }
 
 #save-panel legend {
@@ -55,20 +85,44 @@ body#extension-dashboard-index .columns.two .column.secondary {
 }
 
 #save-panel a {
-	color: #8fafd9;
+	color: currentColor;
+	line-height: 1.8em;
+	border-color: currentColor;
 }
 
-#save-panel label > span {
-	border: 1px solid #616057;
-	background: #504f49;
+#save-panel a:hover {
+	border-color: transparent;
 }
 
 #save-panel .actions {
-	border: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
 	overflow: hidden;
-	padding: 7px 0 0 0;
-	width: 100%;
 	position: static;
+	margin: 0;
+	padding: 0;
+	border: none;
+	width: 100%;
+}
+
+#save-panel .actions input,
+#save-panel .actions button {
+	font-size: 1.1rem;
+	font-weight: 300;
+	text-transform: uppercase;
+	margin: 0;
+	padding: 1rem 1.5rem;
+	border: none;
+	background: #2f77eb;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#save-panel .actions input:hover,
+#save-panel .actions button:hover {
+	background: #3B3D40;
 }
 
 #save-panel .actions input[type="submit"] {
@@ -77,8 +131,17 @@ body#extension-dashboard-index .columns.two .column.secondary {
 
 #save-panel .actions button.delete {
 	margin-left: 0;
+	background: #ee494e;
 }
 
+#save-panel .actions input + *,
+#save-panel .actions button + * {
+	margin-left: 1rem!important;
+}
+
+/*-----------------------------------------------------------------------------
+	Panels
+-----------------------------------------------------------------------------*/
 
 #dashboard .sortable-container {
 	padding-top: 0;
@@ -212,7 +275,9 @@ select.hide {
 	left: -9999em;
 }
 
-/* PANEL: RSS Feed Reader */
+/*---------------------------------------
+	PANEL: RSS Feed Reader
+---------------------------------------*/
 
 .rss_reader h5 {
 	font-size: 1.4rem;
@@ -260,7 +325,9 @@ select.hide {
 	margin: 0 0 0 5px;
 }
 
-/* PANEL: Datasource To Table */
+/*---------------------------------------
+	PANEL: Datasource To Table
+---------------------------------------*/
 
 .datasource_to_table .panel-inner {
 	padding: 0;
@@ -270,7 +337,9 @@ select.hide {
 	border: none;
 }
 
-/* PANEL: HTML Block */
+/*---------------------------------------
+	PANEL: HTML Block
+---------------------------------------*/
 
 .html_block .html-container {
 	overflow: hidden;
@@ -278,7 +347,9 @@ select.hide {
 	width: 100%;
 }
 
-/* PANEL: Symphony Overview */
+/*---------------------------------------
+	PANEL: Symphony Overview
+---------------------------------------*/
 
 #dashboard .panel h4 {
 	color: #2f77eb;
@@ -323,8 +394,6 @@ select.hide {
 #dashboard .panel ol {
 	list-style-type: decimal;
 }
-
-/* PANEL: Symphony Overview */
 
 .panel.markdown_text p,
 .panel.markdown_text ul,
