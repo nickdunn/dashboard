@@ -201,9 +201,13 @@ body#extension-dashboard-index .columns.two .column.secondary {
 .panel-placeholder {
 	box-sizing: border-box;
 	border-radius: 5px;
-	margin: 0 0 3rem 0;
+	margin: 3rem 0;
 	border: 1px dashed #d3dce2;
 	background: #f4f8fb;
+}
+
+.panel:first-child + .panel-placeholder {
+	margin-top: 0;
 }
 
 .panel h3 {
