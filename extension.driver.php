@@ -9,12 +9,12 @@ Class Extension_Dashboard extends Extension{
 
 	public function install() {
 		return Symphony::Database()->query("CREATE TABLE `tbl_dashboard_panels` (
-		  `id` int(11) NOT NULL auto_increment,
-		  `label` varchar(255) default NULL,
-		  `type` varchar(255) default NULL,
-		  `config` text,
-		  `placement` varchar(255) default NULL,
-		  `sort_order` int(11) default '0',
+		  `id` INT(11) NOT NULL AUTO_INCREMENT,
+		  `label` VARCHAR(255) DEFAULT NULL,
+		  `type` VARCHAR(255) DEFAULT NULL,
+		  `config` TEXT,
+		  `placement` VARCHAR(255) DEFAULT NULL,
+		  `sort_order` INT(11) default '0',
 		  PRIMARY KEY  (`id`)
 		) ENGINE=MyISAM");
 	}
@@ -153,11 +153,11 @@ Class Extension_Dashboard extends Extension{
 
 	public static function buildPanelHTML($p) {
 
-		$panel = new XMLElement('div', NULL, array('class' => 'panel', 'id' => 'id-' . $p['id']));
+		$panel = new XMLElement('div', null, array('class' => 'panel', 'id' => 'id-' . $p['id']));
 		$panel->appendChild(new XMLElement('a', __('Edit'), array('class' => 'panel-edit', 'href' => URL . '/symphony/extension/dashboard/panel_config/?id=' . $p['id'] . '&type=' . $p['type'])));
 		$panel->appendChild(new XMLElement('h3', (($p['label'] == '') ? __('Untitled Panel') : $p['label']) . ('<span>'.__('drag to re-order').'</span>')));
 
-		$panel_inner = new XMLElement('div', NULL, array('class' => 'panel-inner'));
+		$panel_inner = new XMLElement('div', null, array('class' => 'panel-inner'));
 
 		/**
 		* Ask panel extensions to render their panel HTML.
@@ -264,7 +264,7 @@ Class Extension_Dashboard extends Extension{
 					);
 				}
 
-				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset = new XMLElement('fieldset', null, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', __('Data Source to Table')));
 
 				$label = Widget::Label(__('Data Source'), Widget::Select('config[datasource]', $datasources));
@@ -276,7 +276,7 @@ Class Extension_Dashboard extends Extension{
 
 			case 'rss_reader':
 
-				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset = new XMLElement('fieldset', null, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', __('RSS Reader')));
 
 				$label = Widget::Label(__('Feed URL'), Widget::Input('config[url]', $config['url']));
@@ -315,7 +315,7 @@ Class Extension_Dashboard extends Extension{
 
 			case 'html_block':
 
-				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset = new XMLElement('fieldset', null, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', __('HTML Block')));
 
 				$label = Widget::Label(__('Page URL'), Widget::Input('config[url]', $config['url']));
@@ -330,7 +330,7 @@ Class Extension_Dashboard extends Extension{
 
 			case 'markdown_text':
 
-				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset = new XMLElement('fieldset', null, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', __('Markdown Text Block')));
 
 				$formatters = array();
@@ -342,7 +342,7 @@ Class Extension_Dashboard extends Extension{
 					);
 				}
 
-				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset = new XMLElement('fieldset', null, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', __('Markdown Text')));
 
 				$label = Widget::Label(__('Text Formatter'), Widget::Select('config[formatter]', $formatters));

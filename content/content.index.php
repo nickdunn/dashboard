@@ -25,7 +25,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		// Add welcome message
 		$hour = date('H');
 		$welcome = __('Nice to meet you');
-		if($author->get('last_see') != NULL) {
+		if($author->get('last_see') != null) {
 			if($hour < 10) $welcome = __('Good morning');
 			elseif($hour < 17) $welcome = __('Welcome back');
 			else $welcome = __('Good evening');
@@ -47,7 +47,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 
 		if($author->isDeveloper()) {
 			$panel_types_options = array(
-				array('', FALSE, __('New Panel'))
+				array('', false, __('New Panel'))
 			);
 
 			natsort($panel_types);
@@ -66,12 +66,12 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		}
 
 		$this->appendSubheading($welcome . ', ' . $author->get('first_name'), $actions);
-		$this->insertDrawer(Widget::Drawer('dashboard', 'Dashboard', new XMLElement('span', ''), 'closed', time()), 'horizontal', FALSE);
+		$this->insertDrawer(Widget::Drawer('dashboard', 'Dashboard', new XMLElement('span', ''), 'closed', time()), 'horizontal', false);
 
-		$container = new XMLElement('div', NULL, array('id' => 'dashboard', 'class' => 'two columns'));
+		$container = new XMLElement('div', null, array('id' => 'dashboard', 'class' => 'two columns'));
 
-		$primary = new XMLElement('div', NULL, array('class' => 'primary column sortable-container'));
-		$secondary = new XMLElement('div', NULL, array('class' => 'secondary column sortable-container'));
+		$primary = new XMLElement('div', null, array('class' => 'primary column sortable-container'));
+		$secondary = new XMLElement('div', null, array('class' => 'secondary column sortable-container'));
 
 		$panels = Extension_Dashboard::getPanels();
 
