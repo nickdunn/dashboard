@@ -404,7 +404,7 @@ Class Extension_Dashboard extends Extension{
 
 				$cache_id = md5('rss_reader_cache' . $config['url']);
 				$cache = new Cacheable(Administration::instance()->Database());
-				$data = $cache->check($cache_id);
+				$data = $cache->read($cache_id);
 
 				if(!$data) {
 
