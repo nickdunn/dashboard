@@ -8,19 +8,48 @@ require_once(TOOLKIT . '/class.pagemanager.php');
 Class Extension_Dashboard extends Extension{
 
 	public function install() {
-		return Symphony::Database()->query("CREATE TABLE `tbl_dashboard_panels` (
-		  `id` INT(11) NOT NULL AUTO_INCREMENT,
-		  `label` VARCHAR(255) DEFAULT NULL,
-		  `type` VARCHAR(255) DEFAULT NULL,
-		  `config` TEXT,
-		  `placement` VARCHAR(255) DEFAULT NULL,
-		  `sort_order` INT(11) default '0',
-		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM");
+		return Symphony::Database()
+			-create('tbl_dashboard_panels')
+			->ifNotExists()
+			->fields([
+				'id' => [
+					'type' => 'int(11)',
+					'auto' => true,
+				],
+				'label' => [
+					'type' => 'varchar(255)',
+					'null' => true,
+				],
+				'type' => [
+					'type' => 'varchar(255)',
+					'null' => true,
+				],
+				'config' => [
+					'type' => 'text',
+					'null' => true,
+				],
+				'placement' => [
+					'type' => 'varchar(255)',
+					'null' => true,
+				],
+				'sort_order' => [
+					'type' => 'int(11)',
+					'default' => 0,
+				],
+			])
+			->keys([
+				'id' => 'primary',
+			])
+			->execute()
+			->success();
 	}
 
 	public function uninstall() {
-		return Symphony::Database()->query("DROP TABLE `tbl_dashboard_panels`");
+		return Symphony::Database()
+			->drop('tbl_dashboard_panels')
+			->ifExists()
+			->execute()
+			->success();
 	}
 
 
@@ -90,60 +119,78 @@ Class Extension_Dashboard extends Extension{
 	}
 
 	public static function getPanels() {
-		return Symphony::Database()->fetch('SELECT * FROM tbl_dashboard_panels ORDER BY sort_order ASC');
+		return Symphony::Database()
+			->select(['*'])
+			->from('tbl_dashboard_panels')
+			->orderBy('sort_order')
+			->execute()
+			->rows();
 	}
 
 	public static function getPanel($panel_id) {
-		return Symphony::Database()->fetchRow(0, "SELECT * FROM tbl_dashboard_panels WHERE id='{$panel_id}'");
+		return Symphony::Database()
+			->select(['*'])
+			->from('tbl_dashboard_panels')
+			->where(['id' => $panel_id])
+			->execute()
+			->rows()[0];
 	}
 
 	public static function deletePanel($panel_id) {
-		return Symphony::Database()->query("DELETE FROM tbl_dashboard_panels WHERE id='{$panel_id}'");
+		return Symphony::Database()
+			->delete('tbl_dashboard_panels')
+			->where(['id' => $panel_id])
+			->execute()
+			->success();
 	}
 
 	public static function updatePanelOrder($id, $placement, $sort_order) {
-		$sql = sprintf(
-			"UPDATE tbl_dashboard_panels SET
-			placement = '%s',
-			sort_order = '%d'
-			WHERE id = '%d'",
-			Symphony::Database()->cleanValue($placement),
-			Symphony::Database()->cleanValue($sort_order),
-			(int)$id
-		);
-		return Symphony::Database()->query($sql);
+		return Symphony::Database()
+			->update('tbl_dashboard_panels')
+			->set([
+				'placement' => $placement,
+				'sort_order' => $sort_order,
+			])
+			->where(['id' => (int)$id])
+			->execute()
+			->success();
 	}
 
 	public static function savePanel($panel, $config) {
 		if (!isset($panel['id']) || empty($panel['id'])) {
-			$max_sort_order = (int)reset(Symphony::Database()->fetchCol('max_sort_order', 'SELECT MAX(sort_order) AS `max_sort_order` FROM tbl_dashboard_panels'));
+			$max_sort_order = (int)reset(Symphony::Database()
+				->select(['max(sort_order)' => 'max_sort_order'])
+				->from('tbl_dashboard_panels')
+				->execute()
+				->column('max_sort_order')
+			);
 
-			Symphony::Database()->query(sprintf(
-				"INSERT INTO tbl_dashboard_panels
-				(label, type, config, placement, sort_order)
-				VALUES('%s','%s','%s','%s','%d')",
-				Symphony::Database()->cleanValue($panel['label']),
-				Symphony::Database()->cleanValue($panel['type']),
-				Symphony::Database()->cleanValue(serialize($config)),
-				Symphony::Database()->cleanValue($panel['placement']),
-				$max_sort_order + 1
-			));
+			Symphony::Database()
+				->insert('tbl_dashboard_panels')
+				->values([
+					'label' => $panel['label'],
+					'type' => $panel['type'],
+					'config' => serialize($config),
+					'placement' => $panel['placement'],
+					'sort_order' => $max_sort_order + 1,
+				])
+				->execute()
+				->success();
 
 			return Symphony::Database()->getInsertID();
 		}
 
 		else {
-			Symphony::Database()->query(sprintf(
-				"UPDATE tbl_dashboard_panels SET
-				label = '%s',
-				config = '%s',
-				placement = '%s'
-				WHERE id = '%d'",
-				Symphony::Database()->cleanValue($panel['label']),
-				Symphony::Database()->cleanValue(serialize($config)),
-				Symphony::Database()->cleanValue($panel['placement']),
-				(int)$panel['id']
-			));
+			Symphony::Database()
+				->update('tbl_dashboard_panels')
+				->set([
+					'label' => $panel['label'],
+					'config' => serialize($config),
+					'placement' => $panel['placement'],
+				])
+				->where(['id' => (int)$panel['id']])
+				->execute()
+				->success();
 
 			return (int)$panel['id'];
 
