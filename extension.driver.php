@@ -403,7 +403,7 @@ Class Extension_Dashboard extends Extension{
 				require_once(CORE . '/class.cacheable.php');
 
 				$cache_id = md5('rss_reader_cache' . $config['url']);
-				$cache = new Cacheable(Administration::instance()->Database());
+				$cache = new Cacheable(Symphony::Database());
 				$data = $cache->read($cache_id);
 
 				if(!$data) {
@@ -430,10 +430,10 @@ Class Extension_Dashboard extends Extension{
 
 				require_once(TOOLKIT . '/class.xsltprocess.php');
 				$proc = new XsltProcess();
+				$proc->setRuntimeParam(array('show' => $config['show']));
 				$data = $proc->process(
 					$xml,
-					file_get_contents(EXTENSIONS . '/dashboard/lib/rss-reader.xsl'),
-					array('show' => $config['show'])
+					file_get_contents(EXTENSIONS . '/dashboard/lib/rss-reader.xsl')
 				);
 
 				$context['panel']->appendChild(new XMLElement('div', $data));

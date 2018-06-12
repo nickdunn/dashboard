@@ -3,7 +3,7 @@
 require_once(TOOLKIT . '/class.administrationpage.php');
 require_once(EXTENSIONS . '/dashboard/extension.driver.php');
 
-class contentExtensionDashboardPanel_Config extends AjaxPage {
+class contentExtensionDashboardPanel_Config extends XMLPage {
 	protected $panelErrors = array();
 	protected $panelConfig = array();
 	protected $panelLabel = null;
@@ -16,7 +16,6 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 
 		// AjaxPage uses 'result' instead of 'response':
 		$this->_Result = new XMLElement('response');
-		$this->_Result->setIncludeHeader(true);
 
 		$this->panelId = (
 			isset($_REQUEST['id'])
