@@ -576,13 +576,19 @@ Class Extension_Dashboard extends Extension{
 				$container->appendChild($dl);
 
 				$entries = 0;
-				foreach(SectionManager::fetch() as $section) {
+				foreach((new SectionManager)
+					->select()
+					->execute()
+					->rows() as $section) {
 					$entries += EntryManager::fetchCount($section->get('id'));
 				}
 
 				$dl = new XMLElement('dl');
 				$dl->appendChild(new XMLElement('dt', __('Sections')));
-				$dl->appendChild(new XMLElement('dd', (string)count(SectionManager::fetch())));
+				$dl->appendChild(new XMLElement('dd', (string)count((new SectionManager)
+					->select()
+					->execute()
+					->rows())));
 				$dl->appendChild(new XMLElement('dt', __('Entries')));
 				$dl->appendChild(new XMLElement('dd', (string)$entries));
 				$dl->appendChild(new XMLElement('dt', __('Data Sources')));
@@ -590,7 +596,10 @@ Class Extension_Dashboard extends Extension{
 				$dl->appendChild(new XMLElement('dt', __('Events')));
 				$dl->appendChild(new XMLElement('dd', (string)count(EventManager::listAll())));
 				$dl->appendChild(new XMLElement('dt', __('Pages')));
-				$dl->appendChild(new XMLElement('dd', (string)count(PageManager::fetch())));
+				$dl->appendChild(new XMLElement('dd', (string)count((new PageManager)
+					->select()
+					->execute()
+					->rows())));
 
 				$container->appendChild(new XMLElement('h4', __('Statistics')));
 				$container->appendChild($dl);
