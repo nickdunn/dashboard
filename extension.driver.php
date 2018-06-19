@@ -133,7 +133,7 @@ Class Extension_Dashboard extends Extension{
 			->from('tbl_dashboard_panels')
 			->where(['id' => $panel_id])
 			->execute()
-			->rows()[0];
+			->next();
 	}
 
 	public static function deletePanel($panel_id) {
