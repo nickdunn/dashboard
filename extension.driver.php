@@ -9,7 +9,7 @@ Class Extension_Dashboard extends Extension{
 
 	public function install() {
 		return Symphony::Database()
-			-create('tbl_dashboard_panels')
+			->create('tbl_dashboard_panels')
 			->ifNotExists()
 			->fields([
 				'id' => [
