@@ -3,20 +3,18 @@
 require_once(TOOLKIT . '/class.administrationpage.php');
 require_once(EXTENSIONS . '/dashboard/extension.driver.php');
 
-class contentExtensionDashboardPanel_Config extends AjaxPage {
+class contentExtensionDashboardPanel_Config extends XMLPage {
 	protected $panelErrors = array();
 	protected $panelConfig = array();
 	protected $panelLabel = null;
 	protected $panelPlacement = null;
 	protected $panelType = null;
 	protected $response = null;
-	
+
 	public function __construct() {
 		parent::__construct();
 
-		// AjaxPage uses 'result' instead of 'response':
 		$this->_Result = new XMLElement('response');
-		$this->_Result->setIncludeHeader(true);
 
 		$this->panelId = (
 			isset($_REQUEST['id'])
@@ -104,7 +102,7 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 
 			$container = new XMLElement('form');
 			$container->setAttribute('id', 'save-panel');
-			$container->appendChild(new XMLElement('div', NULL, array('class' => 'top')));
+			$container->appendChild(new XMLElement('div', null, array('class' => 'top')));
 
 			$heading = new XMLElement('h3', __('Configuration') . ' <span>' . (isset($this->panelLabel) ? $this->panelLabel :__('Untitled Panel')) . '<span>');
 			$container->appendChild($heading);
@@ -113,18 +111,18 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 				$this->panelType, $this->panelId, $this->panelErrors
 			);
 
-			$primary = new XMLElement('div', NULL, array('class' => 'panel-config'));
+			$primary = new XMLElement('div', null, array('class' => 'panel-config'));
 
-			$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+			$fieldset = new XMLElement('fieldset', null, array('class' => 'settings'));
 			$legend = new XMLElement('legend', __('General'));
 			$fieldset->appendChild($legend);
-			
-			$group = new XMLElement('div', NULL, array('class' => 'group'));
-			
+
+			$group = new XMLElement('div', null, array('class' => 'group'));
+
 			$group->appendChild(Widget::Label(__('Name'),
 				Widget::Input('label', $this->panelLabel)
 			));
-			$group->appendChild(Widget::Label(__('Placement'), 
+			$group->appendChild(Widget::Label(__('Placement'),
 				Widget::Select('placement', array(
 					array(
 						'primary',
@@ -143,7 +141,7 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 
 			if ($config_options) $primary->appendChild($config_options);
 
-			$actions = new XMLElement('div', NULL, array('class' => 'actions'));
+			$actions = new XMLElement('div', null, array('class' => 'actions'));
 			$actions->appendChild(Widget::Input('action[submit]', __('Save Panel'), 'submit', array('class' => 'button create')));
 			$actions->appendChild(Widget::Input('action[cancel]', __('Cancel'), 'submit'));
 

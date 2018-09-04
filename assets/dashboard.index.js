@@ -1,44 +1,44 @@
 /*-----------------------------------------------------------------------------
 Language strings
------------------------------------------------------------------------------*/	 
+-----------------------------------------------------------------------------*/
 
 Symphony.Language.add({
 	'Untitled Panel': false,
-}); 
+});
 
 
 /*-----------------------------------------------------------------------------
 Dashboard
 -----------------------------------------------------------------------------*/
 var Dashboard = {
-	
+
 	dashboard: null,
 	edit_mode: false,
-	
+
 	xsrfToken: function () {
 		return !Symphony.Utilities.getXSRF ?
 			'' :
 			'&xsrf=' + Symphony.Utilities.getXSRF();
 	},
-	
+
 	init: function() {
-		
+
 		var self = this;
 
 		this.dashboard = jQuery('#dashboard');
 		this.drawer = jQuery('#drawer-dashboard');
-		
+
 		// Edit Mode button
 		jQuery('#context').on('click', 'a.edit-mode', function(e) {
 			e.preventDefault();
 			self.edit_mode = !self.edit_mode;
-			
+
 			var text = jQuery(this).text();
 			var title = jQuery(this).attr('title');
-			
-			jQuery(this).text(title).attr('title', text);
+
+			//jQuery(this).text(title).attr('title', text);
 			jQuery(this).toggleClass('selected');
-			
+
 			if (self.edit_mode === true) {
 				self.dashboard.addClass('edit');
 				jQuery('.primary, .secondary').sortable('enable');
@@ -46,9 +46,9 @@ var Dashboard = {
 				self.dashboard.removeClass('edit');
 				jQuery('.primary, .secondary').sortable('disable');
 			}
-			
+
 		});
-		
+
 		// Create New button
 		jQuery('#context').on('change', 'select[name="panel-type"]', function(e) {
 			e.preventDefault();
@@ -62,34 +62,34 @@ var Dashboard = {
 			e.preventDefault();
 			self.savePanel(jQuery('#context form').serialize(), 'delete');
 		});
-		
+
 		// Cancel form button
 		jQuery('#context').on('click', '#drawer-dashboard input[name="action[cancel]"]', function(e) {
 			e.preventDefault();
 			self.resetPanelType();
 			self.hideEditForm(null, true);
 		});
-		
+
 		// Save panel button
 		jQuery('#context').on('click', '#drawer-dashboard input[name="action[submit]"]', function(e) {
 			e.preventDefault();
 			self.savePanel(jQuery('#context form').serialize(), 'submit');
 		});
-		
+
 		// Save panel button (form submit default)
 		jQuery('#context').on('submit', '#drawer-dashboard form', function(e) {
 			e.preventDefault();
 			self.savePanel(jQuery('#context #drawer-dashboard form').serialize(), 'submit');
 		});
-		
+
 		// Edit panel button
 		jQuery('#dashboard').on('click', '.panel a.panel-edit', function(e) {
-			e.preventDefault();		
+			e.preventDefault();
 			var id = jQuery(this).parent().attr('id').replace(/id-/,'');
 			var panel_type = jQuery(this).parent().attr('class').replace(/panel /,'');
 			self.showEditForm(panel_type, id);
 		});
-		
+
 		jQuery('.primary, .secondary').sortable({
 			items: '.panel',
 			connectWith: '.sortable-container',
@@ -107,9 +107,9 @@ var Dashboard = {
 
 		jQuery('.primary, .secondary').droppable({
 			activeClass: 'hover',
-			hoverClass: 'active'	
+			hoverClass: 'active'
 		});
-		
+
 		// Panel name
 		jQuery('#context').on('keyup change', '#drawer-dashboard input[name="label"]', function(e) {
 			var name = jQuery(e.target).val();
@@ -121,14 +121,14 @@ var Dashboard = {
 				title.text(Symphony.Language.get('Untitled Panel'));
 			}
 		});
-		
+
 	},
-	
+
 	saveReordering: function() {
-		
+
 		var post_data = '';
 		var i = 0;
-		
+
 		jQuery('.primary, .secondary').each(function(j) {
 			var sort_order = 1;
 			jQuery('.panel', this).each(function() {
@@ -138,21 +138,21 @@ var Dashboard = {
 				i++;
 			});
 		});
-		
+
 		post_data += '&' + Dashboard.xsrfToken();
-		
+
 		jQuery.ajax({
 			type: 'POST',
 			url: Symphony.Context.get('root') + '/symphony/extension/dashboard/save_order/',
 			data: post_data,
 		});
-		
+
 	},
-	
+
 	resetPanelType: function() {
 		jQuery('#context select[name="panel-type"]').val('');
 	},
-	
+
 	hideEditForm: function(callback, enable_dashboard) {
 		var self = this;
 		if (enable_dashboard === true) this.dashboard.fadeTo('fast', 1);
@@ -165,7 +165,7 @@ var Dashboard = {
 			});
 		this.drawer.trigger('collapse.drawer');
 	},
-	
+
 	showEditForm: function(panel_type, id) {
 		var self = this;
 		jQuery.ajax({
@@ -182,25 +182,25 @@ var Dashboard = {
 				} else {
 					self.revealEditForm(data);
 				}
-				
+
 				// Update title
 				//jQuery('#save-panel input[name="panel[label]"]').change();
 			}
 		});
 	},
-	
+
 	revealEditForm: function(html) {
 		// fade down dashboard panels to give edit form more priority
 		this.dashboard.fadeTo('fast', 0.25);
 		this.drawer.find('.contents').empty().html(html);
 		this.drawer.trigger('expand.drawer');
 	},
-	
+
 	savePanel: function(post_data, action) {
 		var self = this;
-		
+
 		post_data += '&action[' + action + ']=true&' + Dashboard.xsrfToken();
-		
+
 		jQuery.ajax({
 			type: 'POST',
 			url: Symphony.Context.get('root') + '/symphony/extension/dashboard/panel_config/',
@@ -221,12 +221,12 @@ var Dashboard = {
 
 				var id = jQuery('response', data).attr('id');
 				var placement = jQuery('response', data).attr('placement');
-				
+
 				var html = jQuery('response', data).text();
 				var panel = jQuery('#id-' + id);
-				
+
 				switch (action) {
-					
+
 					case 'delete':
 						self.hideEditForm(function() {
 							panel.slideUp('slow', function() {
@@ -234,7 +234,7 @@ var Dashboard = {
 							});
 						}, true);
 					break;
-					
+
 					case 'submit':
 						self.resetPanelType();
 						// insert new panel
@@ -267,7 +267,7 @@ var Dashboard = {
 			}
 		});
 	}
-	
+
 };
 
 jQuery(document).ready(function() {
